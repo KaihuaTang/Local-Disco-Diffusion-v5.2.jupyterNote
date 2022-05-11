@@ -1,4 +1,4 @@
-# Local-Disco-Diffusion-v5.2.jupyterNote
+# Local-Disco-Diffusion-v5.2.jupyterNote (Under Construction)
 A custom Disco Diffusion v5.2 that runs on local GPUS.
 
 
