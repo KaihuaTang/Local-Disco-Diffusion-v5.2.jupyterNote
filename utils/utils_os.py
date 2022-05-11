@@ -1,5 +1,5 @@
 import subprocess, os, sys
-import pathlib, shutil
+import shutil
 
 def gitclone(url):
     res = subprocess.run(['git', 'clone', url], stdout=subprocess.PIPE).stdout.decode('utf-8')
