@@ -48,5 +48,5 @@ jupyter notebook password
 conda install pandas regex matplotlib
 
 # 7. install pip packages
-pip install opencv-python
+pip install opencv-python lpips datetime timm ftfy einops pytorch-lightning omegaconf
 ```
