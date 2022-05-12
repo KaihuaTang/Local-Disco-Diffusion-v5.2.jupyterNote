@@ -9,50 +9,23 @@ from functools import partial
 import os
 import cv2
 import torch
-import pandas as pd
-import gc
 import io
 import math
-import timm
-from IPython import display
-import lpips
-from PIL import Image, ImageOps
+from PIL import ImageOps
 import requests
-from glob import glob
 import json
-from types import SimpleNamespace
 from torch import nn
 from torch.nn import functional as F
 import torchvision.transforms as T
 import torchvision.transforms.functional as TF
-from tqdm.notebook import tqdm
-from CLIP import clip
 from resize_right import resize
-from guided_diffusion.script_util import create_model_and_diffusion, model_and_diffusion_defaults
-from datetime import datetime
-import numpy as np
-import matplotlib.pyplot as plt
-import random
-from ipywidgets import Output
 import hashlib
 from functools import partial  
-from IPython.display import Image as ipyimg
-from numpy import asarray
-from einops import rearrange, repeat
-import torch, torchvision
-import time
-from omegaconf import OmegaConf
-from infer import InferenceHelper
 
-
-import py3d_tools
-from CLIP import clip
 from resize_right import resize
-from guided_diffusion.script_util import create_model_and_diffusion
 import disco_xform_utils as dxf
-
 import py3d_tools as p3dT
-import disco_xform_utils as dxf
+
 
 TRANSLATION_SCALE = 1.0/200.0
 
