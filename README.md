@@ -69,6 +69,6 @@ The text prompts can be gound at Section 7 in the notebook file. You can type mu
 ## Two Versions
 There are two versions of jupyter notebook files for the Disco Diffusion project.
 
-1. The file *Local_Disco_Diffusion_original_v5_2.ipynb* only has the necessary modifications with minimum changes. All functions are still kept in one single file just like the Colab version.
+1. The file [*Local_Disco_Diffusion_original_v5_2.ipynb*](https://github.com/KaihuaTang/Local-Disco-Diffusion-v5.2.jupyterNote/blob/main/Local_Disco_Diffusion_original_v5_2.ipynb) only has the necessary modifications with minimum changes. All functions are still kept in one single file just like the Colab version.
 
-2. The file *Local_Disco_Diffusion_v5_2.ipynb* puts all the functions in separate utils files, so it only contains the core function and all the parameters.
+2. The file [*Local_Disco_Diffusion_v5_2.ipynb*](https://github.com/KaihuaTang/Local-Disco-Diffusion-v5.2.jupyterNote/blob/main/Local_Disco_Diffusion_v5_2.ipynb) puts all the functions in separate utils files, so it only contains the core function and all the parameters.
