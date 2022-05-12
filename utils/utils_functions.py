@@ -2,7 +2,6 @@
 
 # https://gist.github.com/adefossez/0646dbe9ed4005480a2407c62aac8869
 
-from utils.config import *
 from utils.utils_os import *
 from dataclasses import dataclass
 from functools import partial
@@ -55,6 +54,7 @@ import disco_xform_utils as dxf
 import py3d_tools as p3dT
 import disco_xform_utils as dxf
 
+TRANSLATION_SCALE = 1.0/200.0
 
 def interp(t):
     return 3 * t**2 - 2 * t ** 3
@@ -297,7 +297,7 @@ class MakeCutoutsDango(nn.Module):
         l_size = max(sideX, sideY)
         output_shape = [1,3,self.cut_size,self.cut_size] 
         output_shape_2 = [1,3,self.cut_size+2,self.cut_size+2]
-        pad_input = F.pad(input,((sideY-max_size)//2,(sideY-max_size)//2,(sideX-max_size)//2,(sideX-max_size)//2), {})
+        pad_input = F.pad(input,((sideY-max_size)//2,(sideY-max_size)//2,(sideX-max_size)//2,(sideX-max_size)//2))
         cutout = resize(pad_input, out_shape=output_shape)
 
         if self.Overview>0:

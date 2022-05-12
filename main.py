@@ -4,16 +4,15 @@ import torch
 from tqdm.notebook import tqdm
 from IPython import display
 
-from utils.config import *
 from utils.utils_midas import *
 from utils.utils_functions import *
 
 
+normalize = T.Normalize(mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+
 def do_run(args, diffusion, model,lpips_model, secondary_model, model_path, gpu_device):
     seed = args.seed
     print(range(args.start_frame, args.max_frames))
-    
-    normalize = T.Normalize(mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
 
     if (args.animation_mode == "3D") and (args.midas_weight > 0.0):
         midas_model, midas_transform, midas_net_w, midas_net_h, midas_resize_mode, midas_normalization = init_midas_depth_model(args.midas_depth_model, model_path=model_path, gpu_device=gpu_device)
