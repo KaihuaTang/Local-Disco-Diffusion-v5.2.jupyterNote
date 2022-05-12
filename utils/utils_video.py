@@ -124,11 +124,11 @@ def split_prompts(prompts, max_frames):
     return prompt_series
 
 
-def update_parameters(key_frames, angle, zoom, translation_x, translation_y, translation_z,
+def update_parameters(key_frames, max_frames, interp_spline, angle, zoom, translation_x, translation_y, translation_z,
                       rotation_3d_x, rotation_3d_y, rotation_3d_z):
     if key_frames:
         try:
-            angle_series = get_inbetweens(parse_key_frames(angle))
+            angle_series = get_inbetweens(parse_key_frames(angle), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -139,10 +139,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             angle = f"0: ({angle})"
-            angle_series = get_inbetweens(parse_key_frames(angle))
+            angle_series = get_inbetweens(parse_key_frames(angle), max_frames, interp_spline)
 
         try:
-            zoom_series = get_inbetweens(parse_key_frames(zoom))
+            zoom_series = get_inbetweens(parse_key_frames(zoom), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -153,10 +153,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             zoom = f"0: ({zoom})"
-            zoom_series = get_inbetweens(parse_key_frames(zoom))
+            zoom_series = get_inbetweens(parse_key_frames(zoom), max_frames, interp_spline)
 
         try:
-            translation_x_series = get_inbetweens(parse_key_frames(translation_x))
+            translation_x_series = get_inbetweens(parse_key_frames(translation_x), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -167,10 +167,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             translation_x = f"0: ({translation_x})"
-            translation_x_series = get_inbetweens(parse_key_frames(translation_x))
+            translation_x_series = get_inbetweens(parse_key_frames(translation_x), max_frames, interp_spline)
 
         try:
-            translation_y_series = get_inbetweens(parse_key_frames(translation_y))
+            translation_y_series = get_inbetweens(parse_key_frames(translation_y), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -181,10 +181,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             translation_y = f"0: ({translation_y})"
-            translation_y_series = get_inbetweens(parse_key_frames(translation_y))
+            translation_y_series = get_inbetweens(parse_key_frames(translation_y), max_frames, interp_spline)
 
         try:
-            translation_z_series = get_inbetweens(parse_key_frames(translation_z))
+            translation_z_series = get_inbetweens(parse_key_frames(translation_z), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -195,10 +195,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             translation_z = f"0: ({translation_z})"
-            translation_z_series = get_inbetweens(parse_key_frames(translation_z))
+            translation_z_series = get_inbetweens(parse_key_frames(translation_z), max_frames, interp_spline)
 
         try:
-            rotation_3d_x_series = get_inbetweens(parse_key_frames(rotation_3d_x))
+            rotation_3d_x_series = get_inbetweens(parse_key_frames(rotation_3d_x), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -209,10 +209,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             rotation_3d_x = f"0: ({rotation_3d_x})"
-            rotation_3d_x_series = get_inbetweens(parse_key_frames(rotation_3d_x))
+            rotation_3d_x_series = get_inbetweens(parse_key_frames(rotation_3d_x), max_frames, interp_spline)
 
         try:
-            rotation_3d_y_series = get_inbetweens(parse_key_frames(rotation_3d_y))
+            rotation_3d_y_series = get_inbetweens(parse_key_frames(rotation_3d_y), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -223,10 +223,10 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             rotation_3d_y = f"0: ({rotation_3d_y})"
-            rotation_3d_y_series = get_inbetweens(parse_key_frames(rotation_3d_y))
+            rotation_3d_y_series = get_inbetweens(parse_key_frames(rotation_3d_y), max_frames, interp_spline)
 
         try:
-            rotation_3d_z_series = get_inbetweens(parse_key_frames(rotation_3d_z))
+            rotation_3d_z_series = get_inbetweens(parse_key_frames(rotation_3d_z), max_frames, interp_spline)
         except RuntimeError as e:
             print(
                 "WARNING: You have selected to use key frames, but you have not "
@@ -237,7 +237,7 @@ def update_parameters(key_frames, angle, zoom, translation_x, translation_y, tra
                 "correctly.\n"
             )
             rotation_3d_z = f"0: ({rotation_3d_z})"
-            rotation_3d_z_series = get_inbetweens(parse_key_frames(rotation_3d_z))
+            rotation_3d_z_series = get_inbetweens(parse_key_frames(rotation_3d_z), max_frames, interp_spline)
 
     else:
         angle = float(angle)
