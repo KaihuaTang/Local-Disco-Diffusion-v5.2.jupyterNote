@@ -10,7 +10,8 @@ A custom Disco Diffusion v5.2 that runs on local GPUS.
 1. [Background](#background)
 2. [Install the Requirements](#install-the-requirement)
 3. [Let's Disco](#lets-disco)
-4. [Two Versions](#two-versions)
+4. [Useful Tutorials](#useful-tutorials)
+5. [Two Versions](#two-versions)
 
 
 ## Background
@@ -65,8 +66,21 @@ then we can run the Local_Disco_Diffusion_v5_2.ipynb to generate your amazing im
 
 The text prompts can be gound at Section 3 in the notebook file. You can type multiple sentences to describe the image with the importance weight ":Number" at the end of each sentences like *["a realistic image of a ginger cat:2", "a beautiful kitchen:1"]*. 
 
+
+## Useful Tutorials
+
 More detailed instructions about the parameters of Disco Diffusion project can be found at [*Zippy's Disco Diffusion Cheatsheet v0.3*](https://docs.google.com/document/d/1l8s7uS2dGqjztYSjPpzlmXLjl5PM3IGkRWI3IiCuK7g/edit). To study the effect of different artists, we can see a summary of their painting styles at [*Disco Diffusion 70+ Artist Studies*](https://weirdwonderfulai.art/resources/disco-diffusion-70-plus-artist-studies/). Similarly, there are some popular [*Disco Diffusion Modifiers*](https://weirdwonderfulai.art/resources/disco-diffusion-modifiers/) that can be added as the end of the prompt for certain artistic effects.
 
+1. [*Zippy's Disco Diffusion Cheatsheet v0.3*](https://docs.google.com/document/d/1l8s7uS2dGqjztYSjPpzlmXLjl5PM3IGkRWI3IiCuK7g/edit)
+2. [*Disco Diffusion 70+ Artist Studies*](https://weirdwonderfulai.art/resources/disco-diffusion-70-plus-artist-studies/)
+3. [*Disco Diffusion Modifiers*](https://weirdwonderfulai.art/resources/disco-diffusion-modifiers/)
+
+An example of prompt created by following the above tutorials:
+
+> "a beautiful painting of a deer with tentacles as its mouth walking across the forest by Karol Bak, trending on artstation, Lovecraftian."
+
+<p align = "center"><img src="./assets/fig/fig3.png"  alt="DiscoDeer."></p>
+<p align = "center"><b>Fig. 3: Prompt: "a beautiful painting of a deer with tentacles as its mouth walking across the forest by Karol Bak, trending on artstation, Lovecraftian."</b></p>
 
 ## Two Versions
 There are two versions of jupyter notebook files for the Disco Diffusion project.
