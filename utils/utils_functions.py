@@ -3,9 +3,11 @@
 # https://gist.github.com/adefossez/0646dbe9ed4005480a2407c62aac8869
 
 from utils.config import *
+from utils.utils_os import *
 from dataclasses import dataclass
 from functools import partial
 
+import os
 import cv2
 import torch
 import pandas as pd
@@ -648,7 +650,7 @@ class SecondaryDiffusionImageNet2(nn.Module):
     
 
 
-def download_models(diffusion_model,use_secondary_model,fallback=False):
+def download_models(model_path, check_model_SHA, diffusion_model, use_secondary_model, fallback=False):
   model_256_downloaded = False
   model_512_downloaded = False
   model_secondary_downloaded = False
@@ -753,3 +755,59 @@ def download_models(diffusion_model,use_secondary_model,fallback=False):
       else:
         print('First URL Failed using FallBack')
         download_models(diffusion_model,use_secondary_model,True)
+        
+        
+        
+def update_diffusion_config(diffusion_model, model_config, use_checkpoint, timestep_respacing, diffusion_steps):
+    if diffusion_model == '512x512_diffusion_uncond_finetune_008100':
+        model_config.update({
+            'attention_resolutions': '32, 16, 8',
+            'class_cond': False,
+            'diffusion_steps': 1000, #No need to edit this, it is taken care of later.
+            'rescale_timesteps': True,
+            'timestep_respacing': 250, #No need to edit this, it is taken care of later.
+            'image_size': 512,
+            'learn_sigma': True,
+            'noise_schedule': 'linear',
+            'num_channels': 256,
+            'num_head_channels': 64,
+            'num_res_blocks': 2,
+            'resblock_updown': True,
+            'use_checkpoint': use_checkpoint,
+            'use_fp16': True,
+            'use_scale_shift_norm': True,
+            'timestep_respacing': timestep_respacing,
+            'diffusion_steps': diffusion_steps,
+        })
+    
+    elif diffusion_model == '256x256_diffusion_uncond':
+        model_config.update({
+            'attention_resolutions': '32, 16, 8',
+            'class_cond': False,
+            'diffusion_steps': 1000, #No need to edit this, it is taken care of later.
+            'rescale_timesteps': True,
+            'timestep_respacing': 250, #No need to edit this, it is taken care of later.
+            'image_size': 256,
+            'learn_sigma': True,
+            'noise_schedule': 'linear',
+            'num_channels': 256,
+            'num_head_channels': 64,
+            'num_res_blocks': 2,
+            'resblock_updown': True,
+            'use_checkpoint': use_checkpoint,
+            'use_fp16': True,
+            'use_scale_shift_norm': True,
+            'timestep_respacing': timestep_respacing,
+            'diffusion_steps': diffusion_steps,
+        })
+        
+    return model_config
+
+
+
+def move_files(start_num, end_num, old_folder, new_folder, batch_name, batchNum):
+    for i in range(start_num, end_num):
+        old_file = old_folder + f'/{batch_name}({batchNum})_{i:04}.png'
+        new_file = new_folder + f'/{batch_name}({batchNum})_{i:04}.png'
+        os.rename(old_file, new_file)
+    
