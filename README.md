@@ -63,7 +63,9 @@ jupyter notebook
 ```
 then we can run the Local_Disco_Diffusion_v5_2.ipynb to generate your amazing images!
 
-The text prompts can be gound at Section 7 in the notebook file. You can type multiple sentences to describe the image with the importance weight ":Number" at the end of each sentences like *["a realistic image of a ginger cat:2", "a beautiful kitchen:1"]*. More detailed instructions about the parameters of Disco Diffusion Project can be found at Zippy's [Disco Diffusion Cheatsheet v0.3](https://docs.google.com/document/d/1l8s7uS2dGqjztYSjPpzlmXLjl5PM3IGkRWI3IiCuK7g/edit). 
+The text prompts can be gound at Section 3 in the notebook file. You can type multiple sentences to describe the image with the importance weight ":Number" at the end of each sentences like *["a realistic image of a ginger cat:2", "a beautiful kitchen:1"]*. 
+
+More detailed instructions about the parameters of Disco Diffusion project can be found at [*Zippy's Disco Diffusion Cheatsheet v0.3*](https://docs.google.com/document/d/1l8s7uS2dGqjztYSjPpzlmXLjl5PM3IGkRWI3IiCuK7g/edit). To study the effect of different artists, we can see a summary of their painting styles at [*Disco Diffusion 70+ Artist Studies*](https://weirdwonderfulai.art/resources/disco-diffusion-70-plus-artist-studies/). Similarly, there are some popular [*Disco Diffusion Modifiers*](https://weirdwonderfulai.art/resources/disco-diffusion-modifiers/) that can be added as the end of the prompt for certain artistic effects.
 
 
 ## Two Versions
