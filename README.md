@@ -1,4 +1,4 @@
-# Local-Disco-Diffusion-v5.2.jupyterNote (Under Construction)
+# Local-Disco-Diffusion-v5.2.jupyterNote
 A custom Disco Diffusion v5.2 that runs on local GPUS.
 
 
@@ -10,6 +10,7 @@ A custom Disco Diffusion v5.2 that runs on local GPUS.
 1. [Background](#background)
 2. [Install the Requirements](#install-the-requirement)
 3. [Let's Disco](#lets-disco)
+4. [Two Versions](#two-versions)
 
 
 ## Background
@@ -63,3 +64,11 @@ jupyter notebook
 then we can run the Local_Disco_Diffusion_v5_2.ipynb to generate your amazing images!
 
 The text prompts can be gound at Section 7 in the notebook file. You can type multiple sentences to describe the image with the importance weight ":Number" at the end of each sentences like *["a realistic image of a ginger cat:2", "a beautiful kitchen:1"]*. More detailed instructions about the parameters of Disco Diffusion Project can be found at Zippy's [Disco Diffusion Cheatsheet v0.3](https://docs.google.com/document/d/1l8s7uS2dGqjztYSjPpzlmXLjl5PM3IGkRWI3IiCuK7g/edit). 
+
+
+## Two Versions
+There are two versions of jupyter notebook files for the Disco Diffusion project.
+
+1. The file *Local_Disco_Diffusion_original_v5_2.ipynb* only has the necessary modifications with minimum changes. All functions are still kept in one single file just like the Colab version.
+
+2. The file *Local_Disco_Diffusion_v5_2.ipynb* puts all the functions in separate utils files, so it only contains the core function and all the parameters.
