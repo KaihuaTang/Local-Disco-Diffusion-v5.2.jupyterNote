@@ -9,6 +9,7 @@ from datetime import datetime
 from ipywidgets import Output 
 from tqdm.notebook import tqdm
 from IPython import display
+import matplotlib.pyplot as plt 
 
 from utils.utils_midas import *
 from utils.utils_functions import *
