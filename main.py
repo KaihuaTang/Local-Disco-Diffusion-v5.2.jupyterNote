@@ -1,6 +1,12 @@
 # the main function
 
+import gc 
 import torch
+import random
+import numpy as np
+from CLIP import clip
+from datetime import datetime 
+from ipywidgets import Output 
 from tqdm.notebook import tqdm
 from IPython import display
 
