@@ -94,7 +94,7 @@ def init_midas_depth_model(midas_model_type="dpt_large", model_path=None, gpu_de
     midas_model.eval()
     
     if optimize==True:
-        if gpu_device == torch.device("cuda"):
+        if gpu_device == torch.device(gpu_device):
             midas_model = midas_model.to(memory_format=torch.channels_last)  
             midas_model = midas_model.half()
 

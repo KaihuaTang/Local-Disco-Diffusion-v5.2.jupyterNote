@@ -168,7 +168,7 @@ def do_run(args, diffusion, model,lpips_model, secondary_model, model_path, gpu_
                   
                   if args.fuzzy_prompt:
                       for i in range(25):
-                          model_stat["target_embeds"].append((txt + torch.randn(txt.shape).cuda() * args.rand_mag).clamp(0,1))
+                          model_stat["target_embeds"].append((txt + torch.randn(txt.shape).device(gpu_device) * args.rand_mag).clamp(0,1))
                           model_stat["weights"].append(weight)
                   else:
                       model_stat["target_embeds"].append(txt)
@@ -184,7 +184,7 @@ def do_run(args, diffusion, model,lpips_model, secondary_model, model_path, gpu_
                     embed = clip_model.encode_image(normalize(batch)).float()
                     if args.fuzzy_prompt:
                         for i in range(25):
-                            model_stat["target_embeds"].append((embed + torch.randn(embed.shape).cuda() * args.rand_mag).clamp(0,1))
+                            model_stat["target_embeds"].append((embed + torch.randn(embed.shape).device(gpu_device) * args.rand_mag).clamp(0,1))
                             weights.extend([weight / cutn] * cutn)
                     else:
                         model_stat["target_embeds"].append(embed)
