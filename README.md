@@ -9,6 +9,7 @@ A custom Disco Diffusion v5.2 that runs on local GPUS.
 ## Contents
 1. [Background](#background)
 2. [Install the Requirements](#install-the-requirement)
+3. [Let's Disco](#lets-disco)
 
 
 ## Background
@@ -50,3 +51,15 @@ conda install pandas regex matplotlib
 # 7. install pip packages
 pip install opencv-python lpips datetime timm ftfy einops pytorch-lightning omegaconf
 ```
+
+
+## Let's Disco
+
+After install all the requirements, we can start to run the disco diffusion project. We can open the jupyter notebook on your local device by the following command:
+```bash
+# open jupyter notebook
+jupyter notebook
+```
+then we can run the Local_Disco_Diffusion_v5_2.ipynb to generate your amazing images!
+
+The text prompts can be gound at Section 7 in the notebook file. You can type multiple sentences to describe the image with the importance weight ":Number" at the end of each sentences like *["a realistic image of a ginger cat:2", "a beautiful kitchen:1"]*. More detailed instructions about the parameters of Disco Diffusion Project can be found at Zippy's [Disco Diffusion Cheatsheet v0.3](https://docs.google.com/document/d/1l8s7uS2dGqjztYSjPpzlmXLjl5PM3IGkRWI3IiCuK7g/edit). 
