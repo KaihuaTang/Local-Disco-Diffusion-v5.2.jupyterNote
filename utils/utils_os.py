@@ -38,24 +38,8 @@ def preprocess(model_path, project_dir):
         gitclone("https://github.com/MSFTserver/pytorch3d-lite.git")
     sys.path.append(f'{project_dir}/pytorch3d-lite')
     
-    if not os.path.exists('MiDaS'):
-        gitclone("https://github.com/isl-org/MiDaS.git")
-    if not os.path.exists('MiDaS/midas_utils.py'):
-        shutil.move('MiDaS/utils.py', 'MiDaS/midas_utils.py')
-    if not os.path.exists(f'{model_path}/dpt_large-midas-2f21e586.pt'):
-        wget("https://github.com/intel-isl/DPT/releases/download/1_0/dpt_large-midas-2f21e586.pt", model_path)
-    sys.path.append(f'{project_dir}/MiDaS')
-    
     if not os.path.exists("disco-diffusion"):
         gitclone("https://github.com/alembics/disco-diffusion.git")
     if os.path.exists('disco_xform_utils.py') is not True:
         shutil.move('disco-diffusion/disco_xform_utils.py', 'disco_xform_utils.py')
     sys.path.append(project_dir)
-    
-    
-    if os.path.exists("AdaBins") is not True:
-          gitclone("https://github.com/shariqfarooq123/AdaBins.git")
-    if not os.path.exists(f'{project_dir}/pretrained/AdaBins_nyu.pt'):
-        createPath(f'{project_dir}/pretrained')
-        wget("https://cloudflare-ipfs.com/ipfs/Qmd2mMnDLWePKmgfS8m6ntAg4nhV5VkUyAydYBp8cWWeB7/AdaBins_nyu.pt", f'{project_dir}/pretrained')
-    sys.path.append(f'{project_dir}/AdaBins')

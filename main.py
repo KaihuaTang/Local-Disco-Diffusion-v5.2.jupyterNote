@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 from PIL import Image 
 
 
-from utils.utils_midas import *
 from utils.utils_functions import *
 
 
@@ -23,8 +22,7 @@ def do_run(args, diffusion, model,lpips_model, secondary_model, model_path, gpu_
     seed = args.seed
     print(range(args.start_frame, args.max_frames))
 
-    if (args.animation_mode == "3D") and (args.midas_weight > 0.0):
-        midas_model, midas_transform, midas_net_w, midas_net_h, midas_resize_mode, midas_normalization = init_midas_depth_model(args.midas_depth_model, model_path=model_path, gpu_device=gpu_device)
+
     for frame_num in range(args.start_frame, args.max_frames):      
         display.clear_output(wait=True)
 
@@ -80,50 +78,6 @@ def do_run(args, diffusion, model,lpips_model, secondary_model, model_path, gpu_
             )
 
             cv2.imwrite('prevFrameScaled.png', img_0)
-            init_image = 'prevFrameScaled.png'
-            init_scale = args.frames_scale
-            skip_steps = args.calc_frames_skip_steps
-
-        if args.animation_mode == "3D":
-          if frame_num > 0:
-            seed += 1    
-            if args.resume_run and frame_num == args.start_frame:
-              img_filepath = args.batchFolder+f"/{args.batch_name}({args.batchNum})_{args.start_frame-1:04}.png"
-              if args.turbo_mode and frame_num > args.turbo_preroll:
-                shutil.copyfile(img_filepath, 'oldFrameScaled.png')
-            else:
-              img_filepath = 'prevFrame.png'
-
-            next_step_pil = do_3d_step(args, img_filepath, frame_num, midas_model, midas_transform, gpu_device)
-            next_step_pil.save('prevFrameScaled.png')
-
-            ### Turbo mode - skip some diffusions, use 3d morph for clarity and to save time
-            if args.turbo_mode:
-              if frame_num == args.turbo_preroll: #start tracking oldframe
-                next_step_pil.save('oldFrameScaled.png')#stash for later blending          
-              elif frame_num > args.turbo_preroll:
-                #set up 2 warped image sequences, old & new, to blend toward new diff image
-                old_frame = do_3d_step(args, 'oldFrameScaled.png', frame_num, midas_model, midas_transform, gpu_device)
-                old_frame.save('oldFrameScaled.png')
-                if frame_num % int(args.turbo_steps) != 0: 
-                  print('turbo skip this frame: skipping clip diffusion steps')
-                  filename = f'{args.batch_name}({args.batchNum})_{frame_num:04}.png'
-                  blend_factor = ((frame_num % int(args.turbo_steps))+1)/int(args.turbo_steps)
-                  print('turbo skip this frame: skipping clip diffusion steps and saving blended frame')
-                  newWarpedImg = cv2.imread('prevFrameScaled.png')#this is already updated..
-                  oldWarpedImg = cv2.imread('oldFrameScaled.png')
-                  blendedImage = cv2.addWeighted(newWarpedImg, blend_factor, oldWarpedImg,1-blend_factor, 0.0)
-                  cv2.imwrite(f'{args.batchFolder}/{args.filename}',blendedImage)
-                  next_step_pil.save(f'{img_filepath}') # save it also as prev_frame to feed next iteration
-                  if args.vr_mode:
-                    generate_eye_views(args, TRANSLATION_SCALE,args.batchFolder,filename,frame_num,midas_model, midas_transform, gpu_device)
-                  continue
-                else:
-                  #if not a skip frame, will run diffusion and need to blend.
-                  oldWarpedImg = cv2.imread('prevFrameScaled.png')
-                  cv2.imwrite(f'oldFrameScaled.png',oldWarpedImg)#swap in for blending later 
-                  print('clip/diff this frame - generate clip diff image')
-
             init_image = 'prevFrameScaled.png'
             init_scale = args.frames_scale
             skip_steps = args.calc_frames_skip_steps
@@ -390,20 +344,6 @@ def do_run(args, diffusion, model,lpips_model, secondary_model, model_path, gpu_
                           if args.animation_mode != "None":
                             image.save('prevFrame.png')
                           image.save(f'{args.batchFolder}/{filename}')
-                          if args.animation_mode == "3D":
-                            # If turbo, save a blended image
-                            if args.turbo_mode and frame_num > 0:
-                              # Mix new image with prevFrameScaled
-                              blend_factor = (1)/int(args.turbo_steps)
-                              newFrame = cv2.imread('prevFrame.png') # This is already updated..
-                              prev_frame_warped = cv2.imread('prevFrameScaled.png')
-                              blendedImage = cv2.addWeighted(newFrame, blend_factor, prev_frame_warped, (1-blend_factor), 0.0)
-                              cv2.imwrite(f'{args.batchFolder}/{filename}',blendedImage)
-                            else:
-                              image.save(f'{args.batchFolder}/{filename}')
-
-                            if args.vr_mode:
-                              generate_eye_views(args, TRANSLATION_SCALE, args.batchFolder, filename, frame_num, midas_model, midas_transform, gpu_device)
 
                           # if frame_num != args.max_frames-1:
                           #   display.clear_output()

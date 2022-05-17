@@ -249,7 +249,7 @@ class MakeCutoutsDango(nn.Module):
               T.Lambda(lambda x: x + torch.randn_like(x) * 0.01),
               # T.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1),
           ])
-        elif  args.animation_mode == '2D' or args.animation_mode == '3D':
+        elif  args.animation_mode == '2D':
           self.augs = T.Compose([
               T.RandomHorizontalFlip(p=0.4),
               T.Lambda(lambda x: x + torch.randn_like(x) * 0.01),
@@ -324,56 +324,7 @@ def tv_loss(input):
 
 def range_loss(input):
     return (input - input.clamp(-1, 1)).pow(2).mean([1, 2, 3])
-
-
-
-def do_3d_step(args, img_filepath, frame_num, midas_model, midas_transform, device):
-    if args.key_frames:
-        translation_x = args.translation_x_series[frame_num]
-        translation_y = args.translation_y_series[frame_num]
-        translation_z = args.translation_z_series[frame_num]
-        rotation_3d_x = args.rotation_3d_x_series[frame_num]
-        rotation_3d_y = args.rotation_3d_y_series[frame_num]
-        rotation_3d_z = args.rotation_3d_z_series[frame_num]
-        print(
-            f'translation_x: {translation_x}',
-            f'translation_y: {translation_y}',
-            f'translation_z: {translation_z}',
-            f'rotation_3d_x: {rotation_3d_x}',
-            f'rotation_3d_y: {rotation_3d_y}',
-            f'rotation_3d_z: {rotation_3d_z}',
-        )
-
-    translate_xyz = [-translation_x*TRANSLATION_SCALE, translation_y*TRANSLATION_SCALE, -translation_z*TRANSLATION_SCALE]
-    rotate_xyz_degrees = [rotation_3d_x, rotation_3d_y, rotation_3d_z]
-    print('translation:',translate_xyz)
-    print('rotation:',rotate_xyz_degrees)
-    rotate_xyz = [math.radians(rotate_xyz_degrees[0]), math.radians(rotate_xyz_degrees[1]), math.radians(rotate_xyz_degrees[2])]
-    rot_mat = p3dT.euler_angles_to_matrix(torch.tensor(rotate_xyz, device=device), "XYZ").unsqueeze(0)
-    print("rot_mat: " + str(rot_mat))
-    next_step_pil = dxf.transform_image_3d(img_filepath, midas_model, midas_transform, device,
-                                          rot_mat, translate_xyz, args.near_plane, args.far_plane,
-                                          args.fov, padding_mode=args.padding_mode,
-                                          sampling_mode=args.sampling_mode, midas_weight=args.midas_weight)
-    return next_step_pil
-
-
-
-def generate_eye_views(args, trans_scale,batchFolder,filename,frame_num,midas_model, midas_transform, device):
-    for i in range(2):
-        theta = args.vr_eye_angle * (math.pi/180)
-        ray_origin = math.cos(theta) * args.vr_ipd / 2 * (-1.0 if i==0 else 1.0)
-        ray_rotation = (theta if i==0 else -theta)
-        translate_xyz = [-(ray_origin)*trans_scale, 0,0]
-        rotate_xyz = [0, (ray_rotation), 0]
-        rot_mat = p3dT.euler_angles_to_matrix(torch.tensor(rotate_xyz, device=device), "XYZ").unsqueeze(0)
-        transformed_image = dxf.transform_image_3d(f'{batchFolder}/{filename}', midas_model, midas_transform, device,
-                                                      rot_mat, translate_xyz, args.near_plane, args.far_plane,
-                                                      args.fov, padding_mode=args.padding_mode,
-                                                      sampling_mode=args.sampling_mode, midas_weight=args.midas_weight,spherical=True)
-        eye_file_path = batchFolder+f"/frame_{frame_num:04}" + ('_l' if i==0 else '_r')+'.png'
-        transformed_image.save(eye_file_path)
-      
+     
       
 def save_settings(args, batchFolder, batch_name, batchNum):
     setting_list = {
@@ -431,11 +382,6 @@ def save_settings(args, batchFolder, batch_name, batchNum):
         'translation_x': args.translation_x,
         'translation_y': args.translation_y,
         'translation_z': args.translation_z,
-        'rotation_3d_x': args.rotation_3d_x,
-        'rotation_3d_y': args.rotation_3d_y,
-        'rotation_3d_z': args.rotation_3d_z,
-        'midas_depth_model': args.midas_depth_model,
-        'midas_weight': args.midas_weight,
         'near_plane': args.near_plane,
         'far_plane': args.far_plane,
         'fov': args.fov,
@@ -444,9 +390,6 @@ def save_settings(args, batchFolder, batch_name, batchNum):
         'video_init_path': args.video_init_path,
         'extract_nth_frame': args.extract_nth_frame,
         'video_init_seed_continuity': args.video_init_seed_continuity,
-        'turbo_mode' : args.turbo_mode,
-        'turbo_steps': args.turbo_steps,
-        'turbo_preroll' : args.turbo_preroll,
     }
     # print('Settings:', setting_list)
     with open(f"{batchFolder}/{batch_name}({batchNum})_settings.txt", "w+") as f:   #save settings

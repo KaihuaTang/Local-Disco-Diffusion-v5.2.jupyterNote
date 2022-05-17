@@ -124,8 +124,7 @@ def split_prompts(prompts, max_frames):
     return prompt_series
 
 
-def update_parameters(key_frames, max_frames, interp_spline, angle, zoom, translation_x, translation_y, translation_z,
-                      rotation_3d_x, rotation_3d_y, rotation_3d_z):
+def update_parameters(key_frames, max_frames, interp_spline, angle, zoom, translation_x, translation_y, translation_z):
     if key_frames:
         try:
             angle_series = get_inbetweens(parse_key_frames(angle), max_frames, interp_spline)
@@ -197,60 +196,14 @@ def update_parameters(key_frames, max_frames, interp_spline, angle, zoom, transl
             translation_z = f"0: ({translation_z})"
             translation_z_series = get_inbetweens(parse_key_frames(translation_z), max_frames, interp_spline)
 
-        try:
-            rotation_3d_x_series = get_inbetweens(parse_key_frames(rotation_3d_x), max_frames, interp_spline)
-        except RuntimeError as e:
-            print(
-                "WARNING: You have selected to use key frames, but you have not "
-                "formatted `rotation_3d_x` correctly for key frames.\n"
-                "Attempting to interpret `rotation_3d_x` as "
-                f'"0: ({rotation_3d_x})"\n'
-                "Please read the instructions to find out how to use key frames "
-                "correctly.\n"
-            )
-            rotation_3d_x = f"0: ({rotation_3d_x})"
-            rotation_3d_x_series = get_inbetweens(parse_key_frames(rotation_3d_x), max_frames, interp_spline)
-
-        try:
-            rotation_3d_y_series = get_inbetweens(parse_key_frames(rotation_3d_y), max_frames, interp_spline)
-        except RuntimeError as e:
-            print(
-                "WARNING: You have selected to use key frames, but you have not "
-                "formatted `rotation_3d_y` correctly for key frames.\n"
-                "Attempting to interpret `rotation_3d_y` as "
-                f'"0: ({rotation_3d_y})"\n'
-                "Please read the instructions to find out how to use key frames "
-                "correctly.\n"
-            )
-            rotation_3d_y = f"0: ({rotation_3d_y})"
-            rotation_3d_y_series = get_inbetweens(parse_key_frames(rotation_3d_y), max_frames, interp_spline)
-
-        try:
-            rotation_3d_z_series = get_inbetweens(parse_key_frames(rotation_3d_z), max_frames, interp_spline)
-        except RuntimeError as e:
-            print(
-                "WARNING: You have selected to use key frames, but you have not "
-                "formatted `rotation_3d_z` correctly for key frames.\n"
-                "Attempting to interpret `rotation_3d_z` as "
-                f'"0: ({rotation_3d_z})"\n'
-                "Please read the instructions to find out how to use key frames "
-                "correctly.\n"
-            )
-            rotation_3d_z = f"0: ({rotation_3d_z})"
-            rotation_3d_z_series = get_inbetweens(parse_key_frames(rotation_3d_z), max_frames, interp_spline)
-
     else:
         angle = float(angle)
         zoom = float(zoom)
         translation_x = float(translation_x)
         translation_y = float(translation_y)
         translation_z = float(translation_z)
-        rotation_3d_x = float(rotation_3d_x)
-        rotation_3d_y = float(rotation_3d_y)
-        rotation_3d_z = float(rotation_3d_z)
+
         
-    series_params = (angle_series, zoom_series, translation_x_series, translation_y_series, translation_z_series,
-                     rotation_3d_x_series, rotation_3d_y_series, rotation_3d_z_series)
-    float_params = (angle, zoom, translation_x, translation_y, translation_z,
-                    rotation_3d_x, rotation_3d_y, rotation_3d_z)
+    series_params = (angle_series, zoom_series, translation_x_series, translation_y_series, translation_z_series)
+    float_params = (angle, zoom, translation_x, translation_y, translation_z)
     return series_params, float_params
